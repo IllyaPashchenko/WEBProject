@@ -1,0 +1,15 @@
+.upper-menu {
+    background-color: #edbb60;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Arial Hebrew Scholar", serif;
+}
+
+.item {
+    background-color: darkolivegreen;
+    width: 100%;
+    height: 400px;
+}
