@@ -10,18 +10,28 @@
 <body>
 
 <div class="container" style="width: 50%">
-    <form>
+    <form method="post">
         <div class="form-group">
             <label for="email_login">Email address</label>
-            <input type="email" class="form-control" id="email_login" aria-describedby="emailHelp">
+            <input name="email" type="email" class="form-control" id="email_login" aria-describedby="emailHelp">
         </div>
         <div class="form-group">
             <label for="password_login">Password</label>
-            <input type="password" class="form-control" id="password_login">
+            <input name="password" type="password" class="form-control" id="password_login">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+
+<?php
+if (isset($_POST["email"]) && isset($_POST["password"])) {
+    $password = $_POST['password'];
+    $email = $_POST['email'];
+
+    echo "Correct input " . date("d-m-Y");
+}
+?>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

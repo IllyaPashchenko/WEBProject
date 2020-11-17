@@ -28,8 +28,8 @@
             </div>
         </div>
         <div class="col-2">
-            <a href="signin.html" type="button" class="btn btn-light">Sign in</a>
-            <a href="login.html" type="button" class="btn btn-success">Log in</a>
+            <a href="signin.php" type="button" class="btn btn-light">Sign in</a>
+            <a href="login.php" type="button" class="btn btn-success">Log in</a>
         </div>
     </div>
     <div class="container-fluid">
@@ -72,6 +72,10 @@
         </div>
     </div>
 </div>
+
+<?php
+    print_r($_GET);
+?>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
