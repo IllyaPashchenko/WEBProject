@@ -11,6 +11,20 @@ services:
       - ./:/var/www/html
 
   php:
-    image: php:7.4-fpm
+    build: ./php
     volumes:
       - ./:/var/www/html
+    links:
+      - db
+
+  db:
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: example
+      MYSQL_DATABASE: webdatabase
+    volumes:
+      - ./db:/var/lib/mysql

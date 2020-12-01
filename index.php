@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <?php
+        require "db_conn.php";
+    ?>
 </head>
 <body>
 
@@ -14,22 +17,28 @@
         <div class="col-2">
             <h3>Кладовка игр</h3>
         </div>
-        <div class="col-8">
+        <div class="col-7">
             <div class="dropdown">
-                <button style="background-color: coral" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Сортировка
+                <button style="background-color: coral" class="btn btn-secondary dropdown-toggle" type="button"
+                        id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Жанры
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <button class="dropdown-item" type="button">Времени добавления</button>
-                    <button class="dropdown-item" type="button">Возрасту</button>
-                    <button class="dropdown-item" type="button">Цене (возрастание)</button>
-                    <button class="dropdown-item" type="button">Цене (убывание)</button>
+                    <a href="/?genre=strategy" class="dropdown-item" type="button">Стратегические</a>
+                    <a href="/?genre=tactics" class="dropdown-item" type="button">Тактические</a>
+                    <a href="/?genre=economy" class="dropdown-item" type="button">Экономические</a>
+                    <a href="/?genre=logic" class="dropdown-item" type="button">Логические</a>
+                    <a href="/?genre=military" class="dropdown-item" type="button">Военные</a>
+                    <a href="/?genre=adventure" class="dropdown-item" type="button">Приключения</a>
+                    <a href="/?genre=cards" class="dropdown-item" type="button">Карточные</a>
                 </div>
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-3">
+            <a href="create_game.php" type="button" class="btn btn-light">+</a>
             <a href="signin.php" type="button" class="btn btn-light">Sign in</a>
             <a href="login.php" type="button" class="btn btn-success">Log in</a>
+            <a href="/?reset=all" type="button" class="btn btn-success">Erase</a>
         </div>
     </div>
     <div class="container-fluid">
@@ -71,11 +80,23 @@
             </div>
         </div>
     </div>
+    <?php
+    if (isset($_GET['genre'])) {
+        $games_set = get_by_genre($_GET['genre']);
+        foreach ($games_set as $game) {
+            echo $game[1] . '<br>';
+        }
+    }
+    if (isset($_GET['reset']) && $_GET['reset']=='all') {
+        recreate_table_customers();
+        recreate_table_admins();
+        recreate_table_games();
+        recreate_table_logs();
+        recreate_table_orders();
+    }
+    ?>
 </div>
 
-<?php
-    print_r($_GET);
-?>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
