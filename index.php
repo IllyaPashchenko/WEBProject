@@ -1,4 +1,7 @@
 <?php
+session_start();
+require "db_conn.php";
+
 if (isset($_GET['lang'])){
     $lang=$_GET['lang'];
     switch ($lang){
@@ -25,12 +28,8 @@ if(!isset($_COOKIE["language"])){
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <?php
-        require "db_conn.php";
-    ?>
 </head>
 <body>
-
 <div class="container-fluid">
     <div class="row upper-menu">
         <div class="col-2">
@@ -63,6 +62,7 @@ if(!isset($_COOKIE["language"])){
             <a href="/?reset=all" type="button" class="btn btn-success">Erase</a>
         </div>
     </div>
+
     <div class="container-fluid">
         <div class="row">
             <div style="margin-bottom: 10px" id="carousel" class="carousel slide" data-ride="carousel">
@@ -102,24 +102,23 @@ if(!isset($_COOKIE["language"])){
             </div>
         </div>
     </div>
-
-    <?php
-    echo $_COOKIE["language"];
-    if (isset($_GET['genre'])) {
-        $games_set = get_by_genre($_GET['genre']);
-        foreach ($games_set as $game) {
-            echo $game[1] . '<br>';
-        }
-    }
-    if (isset($_GET['reset']) && $_GET['reset']=='all') {
-        recreate_table_customers();
-        recreate_table_admins();
-        recreate_table_games();
-        recreate_table_logs();
-        recreate_table_orders();
-    }
-    ?>
 </div>
+<?php
+if (isset($_GET['genre'])) {
+    $games_set = get_by_genre($_GET['genre']);
+    foreach ($games_set as $game) {
+        echo $game[1] . '<br>';
+    }
+    echo $_SESSION["email"];
+}
+if (isset($_GET['reset']) && $_GET['reset']=='all') {
+    recreate_table_customers();
+    recreate_table_admins();
+    recreate_table_games();
+    recreate_table_logs();
+    recreate_table_orders();
+}
+?>
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

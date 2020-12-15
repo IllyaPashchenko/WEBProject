@@ -180,3 +180,9 @@ function delete_game($id) {
     global $link;
     $link->query("DELETE FROM TABLETOP_GAME WHERE ID = '" . $id . "'");
 }
+
+function correct_user($email, $password) {
+    global $link;
+    $result = $link->query("SELECT COUNT(*) from CUSTOMERS where EMAIL = '" . $email . "' and PASSWORD = '" . $password . "';") -> fetch_all();
+    return $result[0][0] != 0;
+}

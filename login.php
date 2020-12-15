@@ -1,3 +1,21 @@
+<?php
+session_start();
+require "db_conn.php";
+$message = "";
+if (isset($_POST["email"]) && isset($_POST["password"])) {
+    $password = $_POST['password'];
+    $email = $_POST['email'];
+
+    if (correct_user($email, $password)){
+        $_SESSION["email"] = $email;
+        $_SESSION["password"] = $password;
+
+        header('Location: /');
+    } else {
+        $message = "Пароль або пошта не правильні";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,23 +31,17 @@
     <form method="post">
         <div class="form-group">
             <label for="email_login">Email address</label>
-            <input name="email" type="email" class="form-control" id="email_login" aria-describedby="emailHelp">
+            <input name="email" type="email" class="form-control" id="email_login" aria-describedby="emailHelp" value="<?= $_SESSION["email"] ?>">
         </div>
         <div class="form-group">
             <label for="password_login">Password</label>
-            <input name="password" type="password" class="form-control" id="password_login">
+            <input name="password" type="password" class="form-control" id="password_login" value="<?= $_SESSION["password"] ?>">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-
 <?php
-if (isset($_POST["email"]) && isset($_POST["password"])) {
-    $password = $_POST['password'];
-    $email = $_POST['email'];
-
-    echo "Correct input " . date("d-m-Y");
-}
+    echo $message;
 ?>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
