@@ -81,6 +81,41 @@ function recreate_table_logs()
                         FOREIGN KEY (ID_TABLETOP_GAME) REFERENCES TABLETOP_GAMES(ID)
                 )");
 }
+function insert_game($name, $genre, $age_group, $description, $price) {
+    global $link;
+    $link->query("INSERT INTO TABLETOP_GAMES (GAME_NAME, GENRE, AGE_GROUP, DESCRIPTION, PRICE) VALUES ('$name', '$genre', '$age_group', '$description', $price)");
+}
+
+function customer_registration($login, $pass, $phone) {
+    global $link;
+    $link->query("INSERT INTO CUSTOMERS (LOGIN, PASSWORD, PHONE_NUMBER) VALUES ('$login', '$pass', '$phone')");
+}
+
+function update_customer($id, $login, $pass, $birth, $address, $phone, $email) {
+    global $link;
+    $link->query("UPDATE CUSTOMERS SET LOGIN='$login', PASSWORD='$pass', BIRTH_DATE='$birth', ADDRESS='$address', PHONE_NUMBER='$phone', EMAIL='$email' WHERE ID = '$id'");
+}
+
+function insert_admin($login, $pass, $birth, $address, $phone, $email) {
+    global $link;
+    $link->query("INSERT INTO ADMINS (LOGIN, PASSWORD, BIRTH_DATE, ADDRESS, PHONE_NUMBER, EMAIL) VALUES ('$login', '$pass', '$birth', '$address', '$phone', '$email')");
+}
+
+function update_admin($id, $login, $pass, $birth, $address, $phone, $email) {
+    global $link;
+    $link->query("UPDATE ADMINS SET LOGIN='$login', PASSWORD='$pass', BIRTH_DATE='$birth', ADDRESS='$address', PHONE_NUMBER='$phone', EMAIL='$email' WHERE ID = '$id'");
+}
+
+function insert_log($idAd, $idTG, $date) {
+    global $link;
+    $link->query("INSERT INTO LOGS (ID_ADMIN, ID_TABLETOP_GAME, DATE_TIME) VALUES ('$idAd', '$idTG', '$date')");
+}
+
+function insert_order($idCu, $idTG, $date, $address) {
+    global $link;
+    $link->query("INSERT INTO ORDERS (ID_CUSTOMER, ID_TABLETOP_GAME, DELIVERY_DATE, DELIVERY_ADDRESS) VALUES ('$idCu', '$idTG', '$date', '$address')");
+}
+
 
 function get_by_genre($name)
 {
@@ -89,7 +124,59 @@ function get_by_genre($name)
         ->fetch_all();
 }
 
-function insert_game($name, $genre, $age_group, $description, $price) {
+function get_by_age($age)
+{
     global $link;
-    $link->query("INSERT INTO TABLETOP_GAMES (GAME_NAME, GENRE, AGE_GROUP, DESCRIPTION, PRICE) VALUES ('$name', '$genre', '$age_group', '$description', $price)");
+    return $link->query("SELECT * FROM TABLETOP_GAMES WHERE AGE_GROUP='" . $age . "'", MYSQLI_STORE_RESULT)
+        ->fetch_all();
+}
+
+function get_by_price($min,$max)
+{
+    global $link;
+    return $link->query("SELECT * FROM TABLETOP_GAMES WHERE PRICE BETWEEN '" . $min ."' AND '" . $max . "'", MYSQLI_STORE_RESULT)
+        ->fetch_all();
+}
+
+function get_by_name($name)
+{
+    global $link;
+    return $link->query("SELECT * FROM TABLETOP_GAMES WHERE GAME_NAME='%" . $name . "%'", MYSQLI_STORE_RESULT)
+        ->fetch_all();
+}
+
+
+function orders_by_game($id)
+{
+    global $link;
+    return $link->query("SELECT ORDERS.ID, CUSTOMERS.LOGIN, ORDERS.DELIVERY_DATE, ORDERS.DELIVERY_ADDRESS FROM ORDERS RIGHT JOIN CUSTOMERS ON CUSTOMERS.ID = ORDERS.ID_CUSTOMER WHERE ID_TABLETOP_GAME='" . $id . "'", MYSQLI_STORE_RESULT)
+        ->fetch_all();
+}
+
+function orders_by_customer($id)
+{
+    global $link;
+    return $link->query("SELECT ORDERS.ID, TABLETOP_GAMES.GAME_NAME, ORDERS.DELIVERY_DATE, ORDERS.DELIVERY_ADDRESS FROM ORDERS RIGHT JOIN TABLETOP_GAMES ON TABLETOP_GAMES.ID = ORDERS.ID_TABLETOP_GAME WHERE ID_CUSTOMER='" . $id . "'", MYSQLI_STORE_RESULT)
+        ->fetch_all();
+}
+
+function logs_by_admin($id)
+{
+    global $link;
+    return $link->query("SELECT LOGS.ID, TABLETOP_GAMES.GAME_NAME, LOGS.DATE_TIME FROM LOGS RIGHT JOIN TABLETOP_GAMES ON TABLETOP_GAMES.ID = LOGS.ID_TABLETOP_GAME WHERE ID_ADMIN='" . $id . "'", MYSQLI_STORE_RESULT)
+        ->fetch_all();
+}
+
+
+function delete_customer($id) {
+    global $link;
+    $link->query("DELETE FROM CUSTOMERS WHERE ID = '" . $id . "'");
+}
+function delete_admin($id) {
+    global $link;
+    $link->query("DELETE FROM ADMINS WHERE ID = '" . $id . "'");
+}
+function delete_game($id) {
+    global $link;
+    $link->query("DELETE FROM TABLETOP_GAME WHERE ID = '" . $id . "'");
 }
