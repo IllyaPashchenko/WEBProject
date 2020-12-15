@@ -93,3 +93,9 @@ function insert_game($name, $genre, $age_group, $description, $price) {
     global $link;
     $link->query("INSERT INTO TABLETOP_GAMES (GAME_NAME, GENRE, AGE_GROUP, DESCRIPTION, PRICE) VALUES ('$name', '$genre', '$age_group', '$description', $price)");
 }
+
+function correct_user($email, $password) {
+    global $link;
+    $result = $link->query("SELECT COUNT(*) from CUSTOMERS where EMAIL = '" . $email . "' and PASSWORD = '" . $password . "';") -> fetch_all();
+    return $result[0][0] != 0;
+}
