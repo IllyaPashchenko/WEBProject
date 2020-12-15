@@ -104,6 +104,8 @@ if(!isset($_COOKIE["language"])){
     </div>
 </div>
 <?php
+echo $_COOKIE["language"];
+
 if (isset($_GET['genre'])) {
     $games_set = get_by_genre($_GET['genre']);
     foreach ($games_set as $game) {
