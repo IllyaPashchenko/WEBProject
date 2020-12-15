@@ -1,3 +1,22 @@
+<?php
+if (isset($_GET['lang'])){
+    $lang=$_GET['lang'];
+    switch ($lang){
+        case "ua" :
+            setcookie("language", "Обрано українську мову", time()+15768000);
+            break;
+        case "ru" :
+            setcookie("language", "Выбран русский язык", time()+15768000);
+            break;
+        case "en" :
+            setcookie("language", "English language picked", time()+15768000);
+            break;
+    }
+}
+if(!isset($_COOKIE["language"])){
+    setcookie("language", "Обрано українську мову", time()+15768000);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,6 +54,9 @@
             </div>
         </div>
         <div class="col-3">
+            <a href="/?lang=ua" ><img style="width: 20px" src="images/ukraine_flag.png"/></a>
+            <a href="/?lang=ru" ><img style="width: 20px" src="images/russian_flag.png"/></a>
+            <a href="/?lang=en" ><img style="width: 20px" src="images/usa_flag.png"/></a>
             <a href="create_game.php" type="button" class="btn btn-light">+</a>
             <a href="signin.php" type="button" class="btn btn-light">Sign in</a>
             <a href="login.php" type="button" class="btn btn-success">Log in</a>
@@ -80,7 +102,9 @@
             </div>
         </div>
     </div>
+
     <?php
+    echo $_COOKIE["language"];
     if (isset($_GET['genre'])) {
         $games_set = get_by_genre($_GET['genre']);
         foreach ($games_set as $game) {
