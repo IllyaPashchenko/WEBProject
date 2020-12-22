@@ -11,9 +11,12 @@
 <div class="container" style="width: 50%">
     <form method="post">
         <div class="form-group">
-            <label for="email_signin">Email address</label>
-            <input name="email" type="email" class="form-control" id="email_signin" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <label for="login_signin">Login</label>
+            <input name="login" type="text" class="form-control" id="login_signin">
+        </div>
+        <div class="form-group">
+            <label for="phone_signin">Phone</label>
+            <input name="phone" type="text" class="form-control" id="phone_signin">
         </div>
         <div class="form-group">
             <label for="password_singin">Password</label>
@@ -27,15 +30,17 @@
     </form>
 </div>
 <?php
-    if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm_password"])) {
+    include 'db_conn.php';
+    if (isset($_POST["login"]) && isset($_POST["phone"]) && isset($_POST["password"]) && isset($_POST["confirm_password"])) {
         $password = $_POST['password'];
         $confirm_password = $_POST['confirm_password'];
-        $email = $_POST['email'];
+        $login = $_POST['login'];
+        $phone = $_POST['phone'];
 
         if ($password == $confirm_password) {
-            echo "Correct input " . date("d-m-Y");
+            customer_registration($login, $password, $phone);
         } else {
-            echo "Incorrect input " . date("d-m-Y");
+            echo "Incorrect confimation password ";
         }
     }
 ?>

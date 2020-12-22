@@ -9,12 +9,13 @@ if (isset($_GET['lang'])){
             setcookie("language", "Обрано українську мову", time()+15768000);
             break;
         case "ru" :
-            setcookie("language", "Выбран русский язык", time()+15768000);
+            setcookie("language", "Выбран русский язык \n", time()+15768000);
             break;
         case "en" :
             setcookie("language", "English language picked", time()+15768000);
             break;
     }
+    header("Location: /");
 }
 if(!isset($_COOKIE["language"])){
     setcookie("language", "Обрано українську мову", time()+15768000);
@@ -35,7 +36,7 @@ if(!isset($_COOKIE["language"])){
         <div class="col-2">
             <h3>Кладовка игр</h3>
         </div>
-        <div class="col-7">
+        <div class="col-5">
             <div class="dropdown">
                 <button style="background-color: coral" class="btn btn-secondary dropdown-toggle" type="button"
                         id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -52,7 +53,7 @@ if(!isset($_COOKIE["language"])){
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-5">
             <a href="/?lang=ua" ><img style="width: 20px" src="images/ukraine_flag.png"/></a>
             <a href="/?lang=ru" ><img style="width: 20px" src="images/russian_flag.png"/></a>
             <a href="/?lang=en" ><img style="width: 20px" src="images/usa_flag.png"/></a>
@@ -107,9 +108,12 @@ if(!isset($_COOKIE["language"])){
 echo $_COOKIE["language"];
 
 if (isset($_GET['genre'])) {
-    $games_set = get_by_genre($_GET['genre']);
+    $genre = $_GET['genre'];
+    $games_set = get_by_genre($genre);
+    file_put_contents("logs.txt", "Search by genre " . $genre . "\n", FILE_APPEND);
     foreach ($games_set as $game) {
         echo $game[1] . '<br>';
+        file_put_contents("logs.txt", "$game[1] \n", FILE_APPEND);
     }
     echo $_SESSION["email"];
 }
