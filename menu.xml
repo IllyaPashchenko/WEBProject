@@ -1,0 +1,30 @@
+<menu>
+    <menuelement>
+        <url>/?genre=strategy</url>
+        <name>Стратегические</name>
+    </menuelement>
+    <menuelement>
+        <url>/?genre=tactics</url>
+        <name>Тактические</name>
+    </menuelement>
+    <menuelement>
+        <url>/?genre=economy</url>
+        <name>Экономические</name>
+    </menuelement>
+    <menuelement>
+        <url>/?genre=logic</url>
+        <name>Логические</name>
+    </menuelement>
+    <menuelement>
+        <url>/?genre=military</url>
+        <name>Военные</name>
+    </menuelement>
+    <menuelement>
+        <url>/?genre=adventure</url>
+        <name>Приключения</name>
+    </menuelement>
+    <menuelement>
+        <url>/?genre=cards</url>
+        <name>Карточные</name>
+    </menuelement>
+</menu>

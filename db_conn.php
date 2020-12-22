@@ -141,7 +141,7 @@ function get_by_price($min,$max)
 function get_by_name($name)
 {
     global $link;
-    return $link->query("SELECT * FROM TABLETOP_GAMES WHERE GAME_NAME='%" . $name . "%'", MYSQLI_STORE_RESULT)
+    return $link->query("SELECT * FROM TABLETOP_GAMES WHERE GAME_NAME LIKE '%" . $name . "%'", MYSQLI_STORE_RESULT)
         ->fetch_all();
 }
 
