@@ -72,6 +72,7 @@ if(!isset($_COOKIE["language"])){
             </form>
         </div>
         <div class="col-3">
+            <a href="writeLetter.php" ><img style="width: 20px" src="images/img_460077.png"/></a>
             <a href="/?lang=ua" ><img style="width: 20px" src="images/ukraine_flag.png"/></a>
             <a href="/?lang=ru" ><img style="width: 20px" src="images/russian_flag.png"/></a>
             <a href="/?lang=en" ><img style="width: 20px" src="images/usa_flag.png"/></a>
