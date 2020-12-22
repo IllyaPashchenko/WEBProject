@@ -2,17 +2,17 @@
 session_start();
 require "db_conn.php";
 $message = "";
-if (isset($_POST["email"]) && isset($_POST["password"])) {
+if (isset($_POST["login"]) && isset($_POST["password"])) {
     $password = $_POST['password'];
-    $email = $_POST['email'];
+    $login = $_POST['login'];
 
-    if (correct_user($email, $password)){
-        $_SESSION["email"] = $email;
+    if (correct_user($login, $password)){
+        $_SESSION["login"] = $login;
         $_SESSION["password"] = $password;
 
         header('Location: /');
     } else {
-        $message = "Пароль або пошта не правильні";
+        $message = "Пароль або Логін не правильні";
     }
 }
 ?>
@@ -30,8 +30,8 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
 <div class="container" style="width: 50%">
     <form method="post">
         <div class="form-group">
-            <label for="email_login">Email address</label>
-            <input name="email" type="email" class="form-control" id="email_login" aria-describedby="emailHelp" value="<?= $_SESSION["email"] ?>">
+            <label for="login_login">Email address</label>
+            <input name="login" type="text" class="form-control" id="login_login" value="<?= $_SESSION["login"] ?>">
         </div>
         <div class="form-group">
             <label for="password_login">Password</label>
